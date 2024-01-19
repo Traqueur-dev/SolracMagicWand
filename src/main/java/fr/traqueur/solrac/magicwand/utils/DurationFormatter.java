@@ -11,7 +11,6 @@ public class DurationFormatter {
 	private static final long oneMinute = TimeUnit.MINUTES.toMillis(1);
 	private static final long oneHour = TimeUnit.HOURS.toMillis(1);
 	private static final long oneDay = TimeUnit.DAYS.toMillis(1);
-	public static SimpleDateFormat frenchDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	public static ThreadLocal<DecimalFormat> remainingSeconds = ThreadLocal.withInitial(() -> new DecimalFormat("0.#"));
 	public static ThreadLocal<DecimalFormat> remainingSecondsTrailing = ThreadLocal.withInitial(() -> new DecimalFormat("0.0"));
 
