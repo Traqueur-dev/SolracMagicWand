@@ -1,5 +1,5 @@
 itemwand:
-  material: STICK
+  material: IRON_HOE
   custommodeldata: 10009
   distance: 15
   delay: 10

@@ -15,6 +15,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
@@ -43,7 +44,11 @@ public class MagicWandManager {
         }
         Material material = Material.getMaterial(materialName);
 
-        if(material == null) {
+        if(material == null || !material.isItem()) {
+            throw new WandNotExistException();
+        }
+
+        if(!(new ItemStack(material).getItemMeta() instanceof Damageable)) {
             throw new WandNotExistException();
         }
 
@@ -100,8 +105,20 @@ public class MagicWandManager {
             Entity entity = ray.getHitEntity();
             entity.setFireTicks(WAND_TICKS * 20);
         }
+        this.decrementDurability(itemInHand);
         this.drawLine(handLoc, player.getEyeLocation().clone().add(eyeDirection.normalize().multiply(WAND_DISTANCE)), 0.1);
         CountdownUtils.addCountdown("magicwand", player, WAND_DELAY);
+    }
+
+    private void decrementDurability(ItemStack itemInHand) {
+        Damageable wandMeta = (Damageable) itemInHand.getItemMeta();
+
+        if(wandMeta.getDamage() + 1 <= WAND_MATERIAL.getMaxDurability()){
+            wandMeta.setDamage(wandMeta.getDamage() + 1);
+            itemInHand.setItemMeta(wandMeta);
+        } else {
+            itemInHand.setAmount(0);
+        }
     }
 
     public void drawLine(Location point1, Location point2, double space) {
