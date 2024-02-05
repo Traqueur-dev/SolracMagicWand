@@ -3,8 +3,6 @@ package fr.traqueur.solrac.magicwand.utils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class DurationFormatter {
